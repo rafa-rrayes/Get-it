@@ -23,6 +23,7 @@ def load_template(path):
 def deleteNote(request):
     titulo = unquote(request.split(' ')[1][7:])
     condition = f"titulo = '{titulo}'"
+    print('.'+titulo+'.')
     db.delete(condition)
     db.commit()
 def createNote(request):
@@ -30,7 +31,7 @@ def createNote(request):
     parsed_query = parse_qs(query_string)
     titulo = unquote_plus(parsed_query.get("titulo", [""])[0])
     detalhes = unquote_plus(parsed_query.get("detalhes", [""])[0])
-    db.add(note(titulo, detalhes))
+    db.add(note(titulo.strip(), detalhes))
     db.commit()
 def buildResponse(body='', code=200, reason='OK', headers=''):
     response = f"HTTP/1.1 {code} {reason}\n"
@@ -38,3 +39,4 @@ def buildResponse(body='', code=200, reason='OK', headers=''):
         response += headers + "\n"
     response += f"\n{body}"
     return response.encode()
+
