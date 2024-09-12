@@ -22,9 +22,7 @@ def load_template(path):
         return f.read()
 def deleteNote(request):
     titulo = unquote(request.split(' ')[1][7:])
-    condition = f"titulo = '{titulo}'"
-    print('.'+titulo+'.')
-    db.delete(condition)
+    db.delete('titulo', titulo )
     db.commit()
 def createNote(request):
     query_string = request.split('\n')[-1]
